@@ -7,6 +7,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { LoginButton } from "@/components/auth/login-button";
+import { NavButtons } from "@/components/auth/nav-buttons";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const poppins = Poppins({
@@ -22,7 +23,7 @@ const inter = Inter({
 export default function Home() {
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950 overflow-hidden">
-      {/* Decorative elements - more vibrant colors */}
+      {/* Decorative elements - vibrant colors */}
       <div className="absolute top-40 left-0 w-72 h-72 bg-fuchsia-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
       <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-orange-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
@@ -31,21 +32,12 @@ export default function Home() {
       <nav className="flex justify-between items-center py-6 px-8 md:px-12 relative z-10">
         <div className="flex items-center">
           <span className={cn("text-2xl font-bold text-gray-900 dark:text-white", poppins.className)}>
-            <span className="text-fuchsia-600 dark:text-fuchsia-400">Auth</span>Kit
+            <span className="text-blue-600 dark:text-blue-400">Auth</span>Kit
           </span>
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <LoginButton asChild>
-            <Button variant="outline" className="border-fuchsia-200 text-fuchsia-700 hover:bg-fuchsia-50 dark:border-fuchsia-800 dark:text-fuchsia-300 dark:hover:bg-fuchsia-900/20">
-              Sign in
-            </Button>
-          </LoginButton>
-          <LoginButton mode="modal" asChild>
-            <Button className="bg-gradient-to-r from-fuchsia-600 to-cyan-600 hover:from-fuchsia-700 hover:to-cyan-700 dark:from-fuchsia-700 dark:to-cyan-700 dark:hover:from-fuchsia-600 dark:hover:to-cyan-600">
-              Sign up
-            </Button>
-          </LoginButton>
+          <NavButtons />
         </div>
       </nav>
 
@@ -53,24 +45,24 @@ export default function Home() {
       <section className="py-20 px-8 md:px-12 max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-100 to-cyan-100 text-fuchsia-800 text-sm font-medium mb-2 dark:from-fuchsia-900/30 dark:to-cyan-900/30 dark:text-fuchsia-300">
-              <span className="flex h-2 w-2 rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-500 mr-2"></span>
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 text-sm font-medium mb-2 dark:from-blue-900/30 dark:to-indigo-900/30 dark:text-blue-300">
+              <span className="flex h-2 w-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 mr-2"></span>
               Next.js 14 + NextAuth v5
             </div>
             <h1 className={cn("text-5xl md:text-6xl font-bold text-gray-900 leading-tight dark:text-white", poppins.className)}>
-              Modern <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-cyan-600 dark:from-fuchsia-400 dark:to-cyan-400">Authentication</span> Made Simple
-            </h1>
+              Modern <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Authentication</span> Made Simple
+        </h1>
             <p className={cn("text-xl text-gray-600 leading-relaxed dark:text-gray-300", inter.className)}>
               A complete authentication solution with Next.js 14, NextAuth v5, and Prisma. Secure, scalable, and ready for production.
             </p>
             <div className="flex flex-wrap gap-4">
               <LoginButton asChild>
-                <Button size="lg" className="bg-gradient-to-r from-fuchsia-600 to-cyan-600 hover:from-fuchsia-700 hover:to-cyan-700 text-white shadow-lg shadow-fuchsia-600/20 dark:shadow-fuchsia-900/30 dark:from-fuchsia-700 dark:to-cyan-700 dark:hover:from-fuchsia-600 dark:hover:to-cyan-600">
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg shadow-blue-600/20 dark:shadow-blue-900/30 dark:from-blue-700 dark:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700">
                   Get Started
                 </Button>
               </LoginButton>
-              <Button size="lg" variant="outline" className="border-fuchsia-200 text-fuchsia-700 hover:bg-fuchsia-50 dark:border-fuchsia-800 dark:text-fuchsia-300 dark:hover:bg-fuchsia-900/20">
-                <Link href="https://github.com/your-repo/nextjs-auth-starter" className="flex items-center gap-2">
+              <Button size="lg" variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 dark:hover:bg-blue-900/20">
+                <Link href="https://github.com/piyushkumar24/AuthStarter-NextJs" className="flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                   </svg>
@@ -104,15 +96,20 @@ export default function Home() {
           </div>
           
           <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl">
-            <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/20 to-cyan-600/20 backdrop-blur-sm z-10 rounded-2xl dark:from-fuchsia-500/10 dark:to-cyan-600/10"></div>
+            {/* No overlay or blur for maximum clarity */}
             <div className="absolute inset-0 border border-white/10 rounded-2xl z-20"></div>
-            <Image 
-              src="/login.jpg" 
-              alt="Authentication Interface" 
-              fill 
-              className="object-cover rounded-2xl"
-              priority
-            />
+            <div className="h-full w-full flex items-center justify-center">
+              <Image 
+                src="/login.jpg" 
+                alt="Authentication Interface" 
+                width={1000}
+                height={800}
+                className="rounded-2xl w-full h-full"
+                priority
+                quality={100}
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -297,7 +294,7 @@ export default function AdminPage() {
 
       {/* CTA Section */}
       <section className="py-20 px-8 md:px-12 relative z-10">
-        <div className="max-w-5xl mx-auto bg-gradient-to-r from-fuchsia-600 to-cyan-600 rounded-2xl p-12 text-center text-white shadow-xl shadow-fuchsia-600/20 dark:shadow-fuchsia-900/10">
+        <div className="max-w-5xl mx-auto bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-12 text-center text-white shadow-xl shadow-blue-600/20 dark:shadow-blue-900/10">
           <h2 className={cn("text-3xl md:text-4xl font-bold mb-6", poppins.className)}>
             Ready to Get Started?
           </h2>
@@ -306,17 +303,17 @@ export default function AdminPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <LoginButton asChild>
-              <Button size="lg" variant="secondary" className="bg-white text-fuchsia-700 hover:bg-gray-100 shadow-lg">
+              <Button size="lg" variant="secondary" className="bg-white text-blue-700 hover:bg-gray-100 shadow-lg">
                 Create Account
               </Button>
             </LoginButton>
             <LoginButton mode="modal" asChild>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-fuchsia-500/20">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-blue-500/20 bg-transparent">
                 Sign In
-              </Button>
-            </LoginButton>
-          </div>
+            </Button>
+          </LoginButton>
         </div>
+      </div>
       </section>
 
       {/* Footer */}
@@ -324,7 +321,7 @@ export default function AdminPage() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <span className={cn("text-xl font-bold text-gray-900 dark:text-white", poppins.className)}>
-              <span className="text-fuchsia-600 dark:text-fuchsia-400">Auth</span>Kit
+              <span className="text-blue-600 dark:text-blue-400">Auth</span>Kit
             </span>
             <p className="text-gray-500 dark:text-gray-400 mt-2">
               © {new Date().getFullYear()} AuthKit. All rights reserved.
