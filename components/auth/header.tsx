@@ -15,14 +15,15 @@ export const Header = ({
   label,
 }: HeaderProps) => {
   return (
-    <div className="w-full flex flex-col gap-y-4 items-center justify-center">
+    <div className="w-full flex flex-col items-center justify-center">
       <h1 className={cn(
-        "text-3xl font-bold text-gray-900",
+        "text-3xl font-semibold",
         font.className,
       )}>
-        <span className="text-violet-600">Auth</span>Kit
+        <span className="text-blue-600 dark:text-blue-400">Auth</span>
+        <span className="dark:text-white">Kit</span>
       </h1>
-      <p className="text-gray-600 text-sm">
+      <p className="text-muted-foreground text-sm mt-2 dark:text-gray-400">
         {label}
       </p>
     </div>

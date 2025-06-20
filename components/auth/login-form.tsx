@@ -6,6 +6,8 @@ import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 
 import { LoginSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
@@ -34,6 +36,7 @@ export const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -47,25 +50,49 @@ export const LoginForm = () => {
     setError("");
     setSuccess("");
     
+    // Show loading toast
+    const loadingToast = toast.loading("Signing in...");
+    
     startTransition(() => {
       login(values, callbackUrl)
         .then((data) => {
+          toast.dismiss(loadingToast);
+          
           if (data?.error) {
             form.reset();
             setError(data.error);
+            toast.error("Authentication failed", {
+              description: data.error,
+            });
           }
 
           if (data?.success) {
             form.reset();
             setSuccess(data.success);
+            toast.success("Success!", {
+              description: data.success,
+            });
           }
 
           if (data?.twoFactor) {
             setShowTwoFactor(true);
+            toast.info("Two-factor authentication required", {
+              description: "Please enter the code sent to your email",
+            });
           }
         })
-        .catch(() => setError("Something went wrong"));
+        .catch(() => {
+          toast.dismiss(loadingToast);
+          setError("Something went wrong");
+          toast.error("Something went wrong", {
+            description: "Please try again later",
+          });
+        });
     });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -87,12 +114,13 @@ export const LoginForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Two Factor Code</FormLabel>
+                    <FormLabel className="text-gray-700 dark:text-gray-300">Two Factor Code</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         disabled={isPending}
                         placeholder="123456"
+                        className="bg-white/50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus-visible:ring-blue-500/20 dark:focus-visible:ring-blue-500/20"
                       />
                     </FormControl>
                     <FormMessage />
@@ -107,13 +135,14 @@ export const LoginForm = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className="text-gray-700 dark:text-gray-300">Email</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           disabled={isPending}
                           placeholder="john.doe@example.com"
                           type="email"
+                          className="bg-white/50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus-visible:ring-blue-500/20 dark:focus-visible:ring-blue-500/20"
                         />
                       </FormControl>
                       <FormMessage />
@@ -125,20 +154,36 @@ export const LoginForm = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel className="text-gray-700 dark:text-gray-300">Password</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          disabled={isPending}
-                          placeholder="******"
-                          type="password"
-                        />
+                        <div className="relative">
+                          <Input
+                            {...field}
+                            disabled={isPending}
+                            placeholder="******"
+                            type={showPassword ? "text" : "password"}
+                            className="bg-white/50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus-visible:ring-blue-500/20 dark:focus-visible:ring-blue-500/20 pr-10"
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            onClick={togglePasswordVisibility}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4 text-gray-500" />
+                            ) : (
+                              <Eye className="h-4 w-4 text-gray-500" />
+                            )}
+                          </Button>
+                        </div>
                       </FormControl>
                       <Button
                         size="sm"
                         variant="link"
                         asChild
-                        className="px-0 font-normal text-violet-600 hover:text-violet-700"
+                        className="px-0 font-normal text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                       >
                         <Link href="/auth/reset">
                           Forgot password?
@@ -148,17 +193,17 @@ export const LoginForm = () => {
                     </FormItem>
                   )}
                 />
-            </>
-          )}
+              </>
+            )}
           </div>
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button
             disabled={isPending}
             type="submit"
-            className="w-full bg-violet-600 hover:bg-violet-700"
+            className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
-            {showTwoFactor ? "Confirm" : "Login"}
+            {isPending ? "Processing..." : (showTwoFactor ? "Confirm" : "Login")}
           </Button>
         </form>
       </Form>

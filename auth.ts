@@ -90,6 +90,12 @@ export const authOptions: any = {
   },
   adapter: PrismaAdapter(db),
   session: { strategy: 'jwt' },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
   ...authConfig,
 };
 

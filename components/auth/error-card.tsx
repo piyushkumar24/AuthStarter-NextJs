@@ -1,5 +1,4 @@
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-
+import { AlertTriangle } from "lucide-react";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 
 export const ErrorCard = () => {
@@ -10,7 +9,7 @@ export const ErrorCard = () => {
       backButtonLabel="Back to login"
     >
       <div className="w-full flex justify-center items-center">
-      <ExclamationTriangleIcon className="text-destructive" />
+        <AlertTriangle className="text-destructive dark:text-red-400" size={48} />
       </div>
     </CardWrapper>
   );

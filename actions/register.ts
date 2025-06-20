@@ -6,8 +6,8 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { RegisterSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
-import { sendVerificationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -16,7 +16,11 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Invalid fields!" };
   }
 
-  const { email, password, name } = validatedFields.data;
+  const { email, password, name, confirmPassword } = validatedFields.data;
+
+  // Remove confirmPassword from data before storing in database
+  const { confirmPassword: _, ...dataToStore } = validatedFields.data;
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const existingUser = await getUserByEmail(email);
@@ -33,11 +37,23 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     },
   });
 
-  const verificationToken = await generateVerificationToken(email);
-  await sendVerificationEmail(
-    verificationToken.email,
-    verificationToken.token,
-  );
+  // Generate verification token and send email in the background
+  const successMessage = "Confirmation email sent! Please check your inbox.";
+  
+  // Return success immediately
+  const response = { success: successMessage };
+  
+  // Send email asynchronously
+  generateVerificationToken(email)
+    .then(verificationToken => {
+      return sendVerificationEmail(
+        verificationToken.email,
+        verificationToken.token,
+      );
+    })
+    .catch(error => {
+      console.error("Failed to send verification email:", error);
+    });
 
-  return { success: "Confirmation email sent!" };
+  return response;
 };

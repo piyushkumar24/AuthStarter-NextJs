@@ -26,7 +26,7 @@ export const CardWrapper = ({
   showSocial
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-xl border-violet-100 bg-white/95 backdrop-blur-sm">
+    <Card className="w-[400px] shadow-lg border border-gray-200 bg-white/95 dark:bg-gray-900/95 dark:border-gray-800 backdrop-blur-sm">
       <CardHeader className="pb-2">
         <Header label={headerLabel} />
       </CardHeader>
@@ -34,7 +34,7 @@ export const CardWrapper = ({
         {children}
       </CardContent>
       {showSocial && (
-        <CardFooter className="border-t pt-6">
+        <CardFooter className="border-t border-gray-200 dark:border-gray-800 pt-6">
           <Social />
         </CardFooter>
       )}
