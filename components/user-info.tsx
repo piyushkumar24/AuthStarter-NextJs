@@ -61,7 +61,8 @@ export const UserInfo = ({
             Two Factor Authentication
           </p>
           <Badge 
-            variant={user?.isTwoFactorEnabled ? "success" : "destructive"}
+            variant={user?.isTwoFactorEnabled ? "default" : "destructive"}
+            className={user?.isTwoFactorEnabled ? "bg-emerald-500 hover:bg-emerald-500/80" : ""}
           >
             {user?.isTwoFactorEnabled ? "ON" : "OFF"}
           </Badge>
