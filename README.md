@@ -1,10 +1,5 @@
 # AuthStarter-NextJs
 
-<div align="center">
-  <img src="public/login.jpg" alt="AuthStarter Banner" width="600" style="border-radius: 10px; margin-bottom: 20px;"/>
-  <h3>A complete authentication solution built with Next.js 14 and Auth.js v5</h3>
-</div>
-
 ## 🚀 Features
 
 - **Modern Authentication** - Complete authentication system using Next.js 14 and Auth.js v5
